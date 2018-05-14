@@ -1,0 +1,18 @@
+#
+# Ansible Playbook: Operation management in AWS EC2 instances
+#
+---
+- hosts: localhost
+  gather_facts: no
+  connection: local
+  tasks:
+    - name: gather ec2 facts
+      action: ec2_facts
+    - name: Start EC2 instances specified by tag
+      become: False
+      local_action:
+        module: 'ec2'
+        instance_tags:
+          Operation: OffOn   # tags
+        region: 'ap-northeast-1'
+        state: running
